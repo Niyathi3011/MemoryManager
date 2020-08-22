@@ -6,7 +6,7 @@ public class Inspect extends Service {
 
 
     @Override
-    public void perform() {
+    public void perform(String[] fields) {
 
     }
 }
