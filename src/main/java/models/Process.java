@@ -6,7 +6,7 @@ import java.util.List;
 public class Process {
 
     private final String name;
-    private List<Variable>variableList;
+    private final List<Variable>variableList;
 
     public Process(String name) {
         this.name = name;

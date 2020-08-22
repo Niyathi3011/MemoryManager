@@ -1,8 +1,9 @@
 package services;
 
-import models.MemoryManager;
+import models.Process;
 
 public class Kill extends Service {
+
 
     @Override
     public void perform() {

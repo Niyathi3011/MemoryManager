@@ -3,7 +3,7 @@ package models;
 public class Variable {
 
     private final String name;
-    private int memory;
+    private final int memory;
 
     public Variable(String name, int memory) {
         this.name = name;
