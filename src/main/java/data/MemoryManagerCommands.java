@@ -7,7 +7,6 @@ public class MemoryManagerCommands {
     private static int NUMBER_OF_BLOCKS;
     private static void implementCommands(String command){
         String [] fields=command.split(" ");
-
         Service service;
         switch(fields[0]){
             case "allocate": service=new Allocate();break;
