@@ -2,6 +2,7 @@ package services;
 
 import models.Memory;
 import models.Process;
+import models.Result;
 import models.Variable;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public class Free extends MemoryManager {
                 }
             }
 
+            new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
         }
+        else new Result(Result.Type.error,getAvailableMemory(),getUsedMemory());
     }
 }

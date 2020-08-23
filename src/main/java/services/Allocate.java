@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
+import static models.Result.Type.success;
 import static system.MemoryMangerSystem.*;
 
 public class Allocate extends MemoryManager {
@@ -60,7 +61,13 @@ public class Allocate extends MemoryManager {
 
         if (flag || blockSize == 0) {
             allocate(fields[1], fields[2], blocks);
+            setAvailableMemory(getAvailableMemory()-Integer.valueOf(fields[3]));
+            setUsedMemory(getUsedMemory()+Integer.valueOf(fields[3]));
+
         }
+        else
+            new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
+
 
 
     }
@@ -72,6 +79,17 @@ public class Allocate extends MemoryManager {
 
         Variable variable = new Variable(variableName, blocks);
         getProcessList().get(processName).getVariableList().add(variable);
+        new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
+
+
+    }
+
+    public boolean checkAvailability(int size){
+        if(size>getAvailableMemory()*0.25){
+           new Result(success,getAvailableMemory(),getUsedMemory());
+           return false;
+        }
+        return true;
 
     }
 }

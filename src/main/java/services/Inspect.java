@@ -25,5 +25,6 @@ public class Inspect extends MemoryManager {
             }
             System.out.println(sb.toString());
         }
+
     }
 }
