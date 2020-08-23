@@ -49,7 +49,7 @@ public class Allocate extends MemoryManager {
                 flag = true;
                 break;
 
-            } else if (size < blockSize && fields[3].equalsIgnoreCase("false")) {
+            } else if (fields[3].equalsIgnoreCase("false") && size<blockSize) {
                 blocks.add(m);
                 getFreeBlocks().remove(m);
                 blockSize = blockSize - size;

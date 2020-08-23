@@ -14,5 +14,4 @@ public class Result {
     private final int availableMemory;
     private final int usedMemory;
 
-
 }
