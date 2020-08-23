@@ -10,7 +10,7 @@ import java.util.List;
 public class Variable {
 
     private final String name;
-    private final List<Memory>memoryList;
+    private final List<Memory> memoryList;
 
     public Variable(String name, List<Memory> memoryList) {
         this.name = name;

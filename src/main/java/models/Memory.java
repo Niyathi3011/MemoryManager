@@ -3,6 +3,7 @@ package models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@Getter
 public class Memory {
 
     private final int startBlock;
@@ -13,11 +14,7 @@ public class Memory {
         this.endBlock = endBlock;
     }
 
-    public int getStartBlock() {
-        return startBlock;
-    }
-
-    public int getEndBlock() {
-        return endBlock;
+    public int getSize() {
+        return getEndBlock() - getStartBlock();
     }
 }

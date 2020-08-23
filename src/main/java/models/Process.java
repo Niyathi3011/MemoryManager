@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@AllArgsConstructor
+@Getter
 public class Process {
 
-    private final List<Variable>variableList;
+    private final List<Variable> variableList;
 
-    public List<Variable> getVariableList() {
+   public List<Variable> getVariableList() {
         return variableList;
     }
 

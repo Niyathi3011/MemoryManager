@@ -21,11 +21,12 @@ public class Free extends MemoryManager {
                 if (variable.getName().equalsIgnoreCase(fields[2])) {
                     for (Memory memory : variable.getMemoryList()) {
                         getFreeBlocks().add(memory);
-                        int m = memory.getEndBlock() - memory.getStartBlock();
+                        int m = memory.getSize();
                         setAvailableMemory(getAvailableMemory() + m);
                         setUsedMemory(getUsedMemory() - m);
                     }
                     process.getVariableList().remove(variable);
+                    break;
                 }
             }
 

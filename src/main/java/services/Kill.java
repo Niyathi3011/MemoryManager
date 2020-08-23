@@ -16,18 +16,16 @@ public class Kill extends MemoryManager {
             for (Variable variable : getProcessList().get(fields[1]).getVariableList()) {
                 for (Memory memory : variable.getMemoryList()) {
                     getFreeBlocks().add(memory);
-                    int m = memory.getEndBlock() - memory.getStartBlock();
+                    int m = memory.getSize();
                     setAvailableMemory(getAvailableMemory() + m);
                     setUsedMemory(getUsedMemory() - m);
                 }
             }
             getProcessList().remove(fields[1]);
-            new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
+            new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
 
-        }
-
-        else
-            new Result(Result.Type.error,getAvailableMemory(),getUsedMemory());
+        } else
+            new Result(Result.Type.error, getAvailableMemory(), getUsedMemory());
 
     }
 }

@@ -21,7 +21,6 @@ public class Allocate extends MemoryManager {
     @Override
     public void perform(String[] fields) {
 
-
         Collections.sort(getFreeBlocks(), new Comparator<Memory>() {
             @Override
             public int compare(Memory t1, Memory t2) {
@@ -29,17 +28,28 @@ public class Allocate extends MemoryManager {
             }
         });
 
-
         List<Memory> blocks = new ArrayList<>();
         int blockSize = Integer.valueOf(fields[3]);
-        boolean flag = false;
+        getBlocksAvailable(blockSize, fields[4], blocks);
 
+        if (blocks.size() != 0) {
+            setUsedMemory(getUsedMemory() + blockSize);
+            setAvailableMemory(getAvailableMemory() - blockSize);
+            allocate(fields[1], fields[2], blocks);
+
+
+        } else
+            new Result(Result.Type.success, getAvailableMemory(), getUsedMemory()).toString();
+
+
+    }
+
+    public void getBlocksAvailable(int blockSize, String continuityReq, List<Memory> blocks) {
         for (Memory m : getFreeBlocks()) {
-            int size = m.getEndBlock() - m.getStartBlock();
+            int size = m.getSize();
             if (size == blockSize) {
                 blocks.add(m);
                 getFreeBlocks().remove(m);
-                flag = true;
                 break;
 
             } else if (size > blockSize) {
@@ -47,30 +57,18 @@ public class Allocate extends MemoryManager {
                 blocks.add(new Memory(m.getStartBlock(), m.getStartBlock() + blockSize));
                 getFreeBlocks().remove(m);
                 getFreeBlocks().add(memory);
-                flag = true;
                 break;
 
-            } else if (fields[3].equalsIgnoreCase("false") && size<blockSize) {
-                blocks.add(m);
-                getFreeBlocks().remove(m);
-                blockSize = blockSize - size;
-
+            } else {
+                if (continuityReq.equalsIgnoreCase("false")) {
+                    blocks.add(m);
+                    getFreeBlocks().remove(m);
+                    blockSize = blockSize - size;
+                }
             }
-
         }
-
-        if (flag || blockSize == 0) {
-            allocate(fields[1], fields[2], blocks);
-            setAvailableMemory(getAvailableMemory()-Integer.valueOf(fields[3]));
-            setUsedMemory(getUsedMemory()+Integer.valueOf(fields[3]));
-
-        }
-        else
-            new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
-
-
-
     }
+
 
     public void allocate(String processName, String variableName, List<Memory> blocks) {
 
@@ -79,17 +77,18 @@ public class Allocate extends MemoryManager {
 
         Variable variable = new Variable(variableName, blocks);
         getProcessList().get(processName).getVariableList().add(variable);
-        new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
+        new Result(Result.Type.success, getAvailableMemory(), getUsedMemory()).toString();
 
 
     }
 
-    public boolean checkAvailability(int size){
-        if(size>getAvailableMemory()*0.25){
-           new Result(success,getAvailableMemory(),getUsedMemory());
-           return false;
+    public boolean checkAvailability(int size) {
+        if (size > getAvailableMemory() * 0.25) {
+            new Result(success, getAvailableMemory(), getUsedMemory()).toString();
+            return false;
         }
         return true;
 
     }
 }
+
