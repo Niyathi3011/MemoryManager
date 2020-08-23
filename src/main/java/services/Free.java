@@ -1,20 +1,33 @@
 package services;
 
+import models.Memory;
 import models.Process;
 import models.Variable;
 
-public class Free extends Service {
+import java.util.List;
+
+import static system.MemoryMangerSystem.*;
+import static system.MemoryMangerSystem.getUsedMemory;
+
+public class Free extends MemoryManager {
+
     @Override
     public void perform(String[] fields) {
 
-        for(Process process:memoryManager.getProcessList()){
-            if(process.getName().equalsIgnoreCase(fields[1]))
-                for(Variable variable:process.getVariableList())
-                    if(variable.getName().equalsIgnoreCase(fields[2])) {
-                        process.getVariableList().remove(variable);
-                        break;
+        Process process = getProcessList().get(fields[1]);
+        if (process != null) {
+            for (Variable variable : process.getVariableList()) {
+                if (variable.getName().equalsIgnoreCase(fields[2])) {
+                    for (Memory memory : variable.getMemoryList()) {
+                        getFreeBlocks().add(memory);
+                        int m = memory.getEndBlock() - memory.getStartBlock();
+                        setAvailableMemory(getAvailableMemory() + m);
+                        setUsedMemory(getUsedMemory() - m);
                     }
-        }
+                    process.getVariableList().remove(variable);
+                }
+            }
 
+        }
     }
 }

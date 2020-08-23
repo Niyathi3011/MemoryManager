@@ -1,23 +1,22 @@
 package models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Process {
 
-    private final String name;
     private final List<Variable>variableList;
-
-    public Process(String name) {
-        this.name = name;
-        this.variableList = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public List<Variable> getVariableList() {
         return variableList;
     }
+
+    public Process() {
+        this.variableList = new ArrayList<>();
+    }
+
 }

@@ -1,20 +1,29 @@
 package models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Variable {
 
     private final String name;
-    private final int memory;
+    private final List<Memory>memoryList;
 
-    public Variable(String name, int memory) {
+    public Variable(String name, List<Memory> memoryList) {
         this.name = name;
-        this.memory = memory;
+        this.memoryList = memoryList;
+
     }
 
     public String getName() {
         return name;
     }
 
-    public int getMemory() {
-        return memory;
+    public List<Memory> getMemoryList() {
+        return memoryList;
     }
+
 }

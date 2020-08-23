@@ -1,14 +1,28 @@
 package services;
 
-import models.MemoryManager;
-import models.Process;
+import models.Memory;
+import models.Variable;
+import system.MemoryMangerSystem;
 
-public class Kill extends Service {
+import static system.MemoryMangerSystem.*;
+
+public class Kill extends MemoryManager {
 
     @Override
     public void perform(String[] fields) {
-        for(Process p:memoryManager.getProcessList())
-            if(p.getName().equalsIgnoreCase(fields[1]))
-                memoryManager.getProcessList().remove(p);
+
+        if (getProcessList().containsKey(fields[1])) {
+            for (Variable variable : getProcessList().get(fields[1]).getVariableList()) {
+                for (Memory memory : variable.getMemoryList()) {
+                    getFreeBlocks().add(memory);
+                    int m = memory.getEndBlock() - memory.getStartBlock();
+                    setAvailableMemory(getAvailableMemory() + m);
+                    setUsedMemory(getUsedMemory() - m);
+                }
+            }
+            getProcessList().remove(fields[1]);
+
+        }
+
     }
 }

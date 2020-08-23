@@ -1,14 +1,29 @@
 package services;
 
+import static system.MemoryMangerSystem.getProcessList;
+
+import models.Memory;
 import models.Process;
+import models.Variable;
 
 import java.util.Arrays;
 
-public class Inspect extends Service {
+public class Inspect extends MemoryManager {
+
     @Override
     public void perform(String[] fields) {
-       for(Process p: memoryManager.getProcessList())
-           if(p.getName().equalsIgnoreCase(fields[1]))
-               System.out.println(Arrays.toString(p.getVariableList().toArray()));
+
+        Process process = getProcessList().get(fields[1]);
+        for (Variable variable : process.getVariableList()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(variable.getName());
+            for (Memory memory : variable.getMemoryList()) {
+                sb.append(memory.getStartBlock());
+                sb.append("-");
+                sb.append(memory.getEndBlock());
+
+            }
+            System.out.println(sb.toString());
+        }
     }
 }
