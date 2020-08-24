@@ -5,8 +5,6 @@ import models.Process;
 import models.Result;
 import models.Variable;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,7 +17,7 @@ import static system.MemoryMangerSystem.*;
 public class Allocate extends MemoryManager {
 
     @Override
-    public void perform(String[] fields) {
+    public Result perform(String[] fields) {
 
         Collections.sort(getFreeBlocks(), new Comparator<Memory>() {
             @Override
@@ -36,10 +34,11 @@ public class Allocate extends MemoryManager {
             setUsedMemory(getUsedMemory() + blockSize);
             setAvailableMemory(getAvailableMemory() - blockSize);
             allocate(fields[1], fields[2], blocks);
+            return new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
 
 
         } else
-            new Result(Result.Type.success, getAvailableMemory(), getUsedMemory()).toString();
+            return new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
 
 
     }
@@ -77,7 +76,6 @@ public class Allocate extends MemoryManager {
 
         Variable variable = new Variable(variableName, blocks);
         getProcessList().get(processName).getVariableList().add(variable);
-        new Result(Result.Type.success, getAvailableMemory(), getUsedMemory()).toString();
 
 
     }

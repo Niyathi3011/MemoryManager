@@ -1,19 +1,25 @@
 package services;
 
-import static system.MemoryMangerSystem.getProcessList;
-
 import models.Memory;
 import models.Process;
+import models.Result;
 import models.Variable;
 
-import java.util.Arrays;
+import static system.MemoryMangerSystem.*;
 
 public class Inspect extends MemoryManager {
 
     @Override
-    public void perform(String[] fields) {
+    public Result perform(String[] fields) {
 
         Process process = getProcessList().get(fields[1]);
+        extractedMethod(process);
+
+        return new Result(Result.Type.success,getUsedMemory(),getAvailableMemory());
+
+    }
+
+    private void extractedMethod(Process process) {
         for (Variable variable : process.getVariableList()) {
             StringBuilder sb = new StringBuilder();
             sb.append(variable.getName());
@@ -25,6 +31,5 @@ public class Inspect extends MemoryManager {
             }
             System.out.println(sb.toString());
         }
-
     }
 }

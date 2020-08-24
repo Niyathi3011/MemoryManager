@@ -3,14 +3,13 @@ package services;
 import models.Memory;
 import models.Result;
 import models.Variable;
-import system.MemoryMangerSystem;
 
 import static system.MemoryMangerSystem.*;
 
 public class Kill extends MemoryManager {
 
     @Override
-    public void perform(String[] fields) {
+    public Result perform(String[] fields) {
 
         if (getProcessList().containsKey(fields[1])) {
             for (Variable variable : getProcessList().get(fields[1]).getVariableList()) {
@@ -22,10 +21,10 @@ public class Kill extends MemoryManager {
                 }
             }
             getProcessList().remove(fields[1]);
-            new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
+            return new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
 
         } else
-            new Result(Result.Type.error, getAvailableMemory(), getUsedMemory());
+            return new Result(Result.Type.error, getAvailableMemory(), getUsedMemory());
 
     }
 }

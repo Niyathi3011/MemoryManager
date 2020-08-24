@@ -1,5 +1,7 @@
 package services;
 
+import models.Result;
+
 public abstract class MemoryManager {
-    abstract public void perform(String []fields);
+    abstract public Result perform(String []fields);
 }
