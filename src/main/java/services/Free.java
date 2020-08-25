@@ -21,16 +21,15 @@ public class Free extends MemoryManager {
                         getFreeBlocks().add(memory);
                         int m = memory.getSize();
                         int availableMemory = getAvailableMemory() + m;
-                        setAvailableMemory(availableMemory);
-                        setUsedMemory(getUsedMemory() - m);
+                        int unAvailableMemory = getUsedMemory() - m;
+                        setMemory(availableMemory,unAvailableMemory);
                     }
                     process.getVariableList().remove(variable);
                     break;
                 }
             }
 
-            return new Result(Result.Type.success,getAvailableMemory(),getUsedMemory());
-        }
-        else return new Result(Result.Type.error,getAvailableMemory(),getUsedMemory());
+            return new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
+        } else return new Result(Result.Type.error, getAvailableMemory(), getUsedMemory());
     }
 }

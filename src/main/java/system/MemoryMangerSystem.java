@@ -6,15 +6,20 @@ import models.Memory;
 import models.Process;
 import services.MemoryManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class MemoryMangerSystem {
+public final class MemoryMangerSystem {
 
     private static int availableMemory;
     private static int usedMemory;
     private static List<Memory>freeBlocks;
+
+    public MemoryMangerSystem() {
+    }
+
     private static HashMap<String,Process>processList;
 
     public static int getAvailableMemory() {
@@ -33,11 +38,12 @@ public class MemoryMangerSystem {
         return processList;
     }
 
-    public static void setAvailableMemory(int availableMemory) {
-        MemoryMangerSystem.availableMemory = availableMemory;
+
+    public static void setMemory(int available,int unavailableMemory){
+        usedMemory=unavailableMemory;
+        availableMemory=available;
     }
 
-    public static void setUsedMemory(int usedMemory) {
-        MemoryMangerSystem.usedMemory = usedMemory;
-    }
+
+
 }

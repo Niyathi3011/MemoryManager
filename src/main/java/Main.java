@@ -20,8 +20,7 @@ public class Main {
         //logger.info("Starting");
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the total Memory");
-        setAvailableMemory(sc.nextInt());
-        setUsedMemory(0);
+        setMemory(sc.nextInt(),0);
         //logger.info("set the available and use memories to their respective values");
         getFreeBlocks().add(new Memory(0, getAvailableMemory()));
         String s = "Yes";

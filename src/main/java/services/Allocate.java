@@ -31,8 +31,9 @@ public class Allocate extends MemoryManager {
         getBlocksAvailable(blockSize, fields[4], blocks);
 
         if (blocks.size() != 0) {
-            setUsedMemory(getUsedMemory() + blockSize);
-            setAvailableMemory(getAvailableMemory() - blockSize);
+            int availableMemory = getAvailableMemory() - blockSize;
+            int unAvailableMemory = getUsedMemory() + blockSize;
+            setMemory(availableMemory, unAvailableMemory);
             allocate(fields[1], fields[2], blocks);
             return new Result(Result.Type.success, getAvailableMemory(), getUsedMemory());
 
@@ -80,13 +81,5 @@ public class Allocate extends MemoryManager {
 
     }
 
-    public boolean checkAvailability(int size) {
-        if (size > getAvailableMemory() *0.25) {
-            new Result(success, getAvailableMemory(), getUsedMemory()).toString();
-            return false;
-        }
-        return true;
-
-    }
 }
 
