@@ -9,14 +9,13 @@ import services.MemoryManager;
 import java.util.HashMap;
 import java.util.List;
 
-@AllArgsConstructor
+
 public class MemoryMangerSystem {
 
     private static int availableMemory;
     private static int usedMemory;
     private static List<Memory>freeBlocks;
     private static HashMap<String,Process>processList;
-
 
     public static int getAvailableMemory() {
         return availableMemory;

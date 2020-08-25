@@ -44,24 +44,24 @@ public class Allocate extends MemoryManager {
     }
 
     public void getBlocksAvailable(int blockSize, String continuityReq, List<Memory> blocks) {
-        for (Memory m : getFreeBlocks()) {
-            int size = m.getSize();
+        for (Memory memory : getFreeBlocks()) {
+            int size = memory.getSize();
             if (size == blockSize) {
-                blocks.add(m);
-                getFreeBlocks().remove(m);
+                blocks.add(memory);
+                getFreeBlocks().remove(memory);
                 break;
 
             } else if (size > blockSize) {
-                Memory memory = new Memory(m.getStartBlock() + blockSize, m.getEndBlock());
-                blocks.add(new Memory(m.getStartBlock(), m.getStartBlock() + blockSize));
-                getFreeBlocks().remove(m);
-                getFreeBlocks().add(memory);
+                Memory memory1= new Memory(memory.getStartBlock() + blockSize, memory.getEndBlock());
+                blocks.add(new Memory(memory.getStartBlock(), memory.getStartBlock() + blockSize));
+                getFreeBlocks().remove(memory);
+                getFreeBlocks().add(memory1);
                 break;
 
             } else {
                 if (continuityReq.equalsIgnoreCase("false")) {
-                    blocks.add(m);
-                    getFreeBlocks().remove(m);
+                    blocks.add(memory);
+                    getFreeBlocks().remove(memory);
                     blockSize = blockSize - size;
                 }
             }
@@ -81,7 +81,7 @@ public class Allocate extends MemoryManager {
     }
 
     public boolean checkAvailability(int size) {
-        if (size > getAvailableMemory() * 0.25) {
+        if (size > getAvailableMemory() *0.25) {
             new Result(success, getAvailableMemory(), getUsedMemory()).toString();
             return false;
         }
